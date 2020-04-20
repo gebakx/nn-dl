@@ -54,15 +54,23 @@ class: left, middle, inverse
 
 $$h(x)=f(\sum_{i=1}^n w_i x_i + b)$$
 
+$$f(x)=step\ function$$
+
 - Learning rule:
 
 $$w_i'=w_i+\eta(h(x)-y)$$
+
 ]
 .col2[
 
-![:scale 100%](figures/hyperplane.png)
+![:scale 90%](figures/hyperplane.png)
+
+![:scale 60%](figures/step.png)
+
+.tiny[.red[*] Source: [wikipedia](https://en.wikipedia.org/wiki/Heaviside_step_function)]
 
 ]]
+
 
 ---
 
@@ -76,78 +84,74 @@ clf.fit(x_train, y_train)
 predictions = clf.predict(x_test)
 ```
 
-**Example:**
-
-- ([view](codes/nn-sklearn.html)) / ([download](codes/nn-sklearn.ipynb))
-
-- [reference](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html)
-
 **Main parameters:**
 
 - .blue[max_iter]: default=1000
+
+#### User guide: <br>
+.tiny[[https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html)]
 
 ---
 
 # Multi-layer Perceptron
 
 .col5050[
-.col1[- One hidden layer
+.col1[
+- Hidden layers
 
 - Non-linear model
 
 - Classification & regression
 
-- [Backpropagation](https://en.wikipedia.org/wiki/Backpropagation) as training algorithm
+- Forward propagation of perceptrons
+
+- Backpropagation as training algorithm <br>
+Gradient descent (optimization)
+
+$$W^{t+1}=W^t-\eta\frac{\partial loss}{\partial W}$$
+
+$$W=\{w,b\}$$
+
+$$\eta=learning\ rate$$
+
+$$loss=training\ error$$
 ]
 .col2[
 ![:scale 110%](figures/mlp.png)
 ]]
 
+
 .footnote[Source: [wikipedia](https://en.wikipedia.org/wiki/Artificial_neural_network)]
 
 ---
 
-# Multi-Layer Perceptron in sklearn
+# Components
 
-```python3
-from sklearn.neural_network import MLPClassifier
+#### Loss functions
 
-clf = MLPClassifier(hidden_layer_sizes=(25,))
-clf.fit(x_train, y_train)
-predictions = clf.predict(x_test)
-```
+- Regression: minimum squared error or root minimum squared error
 
-**Example:**
+- Binary classification: binary cross entropy
 
-- ([view](codes/nn-sklearn.html)) / ([download](codes/nn-sklearn.ipynb))
+- Multiclass classification: categorical cross entropy
 
-- [reference](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html#sklearn.neural_network.MLPClassifier)
+#### Activation functions
 
-**Main parameters:**
+- Hidden units: ReLU $f(x)=max(0,x)$
 
-- .blue[hidden_layer_sizes]: default (100,)
+- Output
+  - Regression: linear $f(x) = x$
 
-- .blue[activation]: {‘identity’, ‘logistic’, ‘tanh’, ‘relu’}, default ‘relu’
+  - Binary classification: sigmoid $f(x) = 1 / (1 + exp(-x))$
 
-- .blue[max_iter]: default=200
-
----
-
-# Bias & Variance
-
-**Remember:**
-
-![](figures/bias.png)![](figures/early-stopping.png)
-
-Normal use of a validation set to select parameters & avoid overfitting!
-
-.footnote[Source: [left](https://towardsdatascience.com/regularization-the-path-to-bias-variance-trade-off-b7a7088b4577), [right](https://elitedatascience.com/overfitting-in-machine-learning)]
+  - Multiclass classification: softmax (one unit per class) <br>
+maximum value after normalizing as distribution
 
 ---
 
 # Deep Learning
 
-- Neural network with 2 or more hidden layers
+- Neural network with several hidden layers
 
 ![](figures/chart-1.png)
 
@@ -159,11 +163,13 @@ Normal use of a validation set to select parameters & avoid overfitting!
 
 # Deep Learning
 
-**Example:**
+**Software packages:**
 
-- Sklearn on Iris
-  - [view](codes/nn-sklearn.html)
-  - [download](codes/nn-sklearn.ipynb)
+- .blue[Tensorflow]: efficient, low-level math stuff, ugly learning curve
+
+- .blue[Keras] ($\subset$ Tensorflow): high-level, nice learning curve
+
+**Example:**
 
 - Keras on MNIST
   - [view](codes/keras-mlp.html)
