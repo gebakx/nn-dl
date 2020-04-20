@@ -71,26 +71,6 @@ $$w_i'=w_i+\eta(h(x)-y)$$
 
 ]]
 
-
----
-
-# Perceptron in sklearn
-
-```python3
-from sklearn.linear_model import Perceptron
-
-clf = Perceptron()
-clf.fit(x_train, y_train)
-predictions = clf.predict(x_test)
-```
-
-**Main parameters:**
-
-- .blue[max_iter]: default=1000
-
-#### User guide: <br>
-.tiny[[https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html)]
-
 ---
 
 # Multi-layer Perceptron
