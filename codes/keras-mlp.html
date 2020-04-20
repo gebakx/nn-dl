@@ -13093,14 +13093,11 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>  
-<span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>  
-    <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span><span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
-    <span class="kn">from</span> <span class="nn">tensorflow</span> <span class="k">import</span> <span class="n">keras</span>
-    <span class="kn">from</span> <span class="nn">tensorflow.keras.datasets</span> <span class="k">import</span> <span class="n">mnist</span>
-    <span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="k">import</span> <span class="n">Sequential</span>
-    <span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="k">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span>
-    <span class="kn">from</span> <span class="nn">tensorflow.keras.optimizers</span> <span class="k">import</span> <span class="n">RMSprop</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">tensorflow.keras.utils</span> <span class="k">import</span> <span class="n">to_categorical</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.datasets</span> <span class="k">import</span> <span class="n">mnist</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="k">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="k">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.optimizers</span> <span class="k">import</span> <span class="n">RMSprop</span>
 </pre></div>
 
     </div>
@@ -13228,8 +13225,8 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># convert class vectors to binary class matrices</span>
-<span class="n">y_train</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
-<span class="n">y_test</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13258,26 +13255,6 @@ div#notebook {
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/init_ops.py:1251: calling VarianceScaling.__init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.
-Instructions for updating:
-Call initializer instance with the dtype argument instead of passing it to the constructor
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -13336,7 +13313,7 @@ _________________________________________________________________
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span>
-              <span class="n">optimizer</span><span class="o">=</span><span class="n">RMSprop</span><span class="p">(),</span>
+              <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span>
               <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
 </pre></div>
 
@@ -13374,46 +13351,47 @@ _________________________________________________________________
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Epoch 1/20
-60000/60000 [==============================] - 9s 149us/sample - loss: 0.2458 - acc: 0.9232
+<pre>Train on 60000 samples
+Epoch 1/20
+60000/60000 [==============================] - 5s 76us/sample - loss: 0.2503 - accuracy: 0.9245
 Epoch 2/20
-60000/60000 [==============================] - 9s 146us/sample - loss: 0.1039 - acc: 0.9685
+60000/60000 [==============================] - 3s 58us/sample - loss: 0.1001 - accuracy: 0.9693
 Epoch 3/20
-60000/60000 [==============================] - 8s 140us/sample - loss: 0.0757 - acc: 0.9771
+60000/60000 [==============================] - 4s 69us/sample - loss: 0.0703 - accuracy: 0.9778
 Epoch 4/20
-60000/60000 [==============================] - 8s 135us/sample - loss: 0.0596 - acc: 0.9814
+60000/60000 [==============================] - 3s 49us/sample - loss: 0.0558 - accuracy: 0.9822
 Epoch 5/20
-60000/60000 [==============================] - 8s 135us/sample - loss: 0.0516 - acc: 0.9844
+60000/60000 [==============================] - 3s 53us/sample - loss: 0.0473 - accuracy: 0.9848
 Epoch 6/20
-60000/60000 [==============================] - 8s 136us/sample - loss: 0.0450 - acc: 0.9866
+60000/60000 [==============================] - 3s 50us/sample - loss: 0.0372 - accuracy: 0.9876
 Epoch 7/20
-60000/60000 [==============================] - 9s 147us/sample - loss: 0.0375 - acc: 0.9886
+60000/60000 [==============================] - 3s 48us/sample - loss: 0.0342 - accuracy: 0.9890
 Epoch 8/20
-60000/60000 [==============================] - 9s 142us/sample - loss: 0.0352 - acc: 0.9895
+60000/60000 [==============================] - 3s 53us/sample - loss: 0.0298 - accuracy: 0.9899
 Epoch 9/20
-60000/60000 [==============================] - 8s 139us/sample - loss: 0.0316 - acc: 0.9903
+60000/60000 [==============================] - 4s 63us/sample - loss: 0.0269 - accuracy: 0.9913
 Epoch 10/20
-60000/60000 [==============================] - 9s 146us/sample - loss: 0.0290 - acc: 0.9919
+60000/60000 [==============================] - 6s 94us/sample - loss: 0.0262 - accuracy: 0.9912
 Epoch 11/20
-60000/60000 [==============================] - 8s 137us/sample - loss: 0.0269 - acc: 0.9921
+60000/60000 [==============================] - 8s 133us/sample - loss: 0.0217 - accuracy: 0.9926
 Epoch 12/20
-60000/60000 [==============================] - 9s 146us/sample - loss: 0.0261 - acc: 0.9930
+60000/60000 [==============================] - 8s 129us/sample - loss: 0.0208 - accuracy: 0.9931
 Epoch 13/20
-60000/60000 [==============================] - 8s 141us/sample - loss: 0.0237 - acc: 0.9930
+60000/60000 [==============================] - 8s 130us/sample - loss: 0.0195 - accuracy: 0.9939
 Epoch 14/20
-60000/60000 [==============================] - 9s 146us/sample - loss: 0.0223 - acc: 0.9935
+60000/60000 [==============================] - 8s 126us/sample - loss: 0.0206 - accuracy: 0.9935
 Epoch 15/20
-60000/60000 [==============================] - 10s 161us/sample - loss: 0.0211 - acc: 0.9941
+60000/60000 [==============================] - 7s 125us/sample - loss: 0.0188 - accuracy: 0.9936
 Epoch 16/20
-60000/60000 [==============================] - 9s 153us/sample - loss: 0.0213 - acc: 0.9939
+60000/60000 [==============================] - 8s 129us/sample - loss: 0.0184 - accuracy: 0.9939
 Epoch 17/20
-60000/60000 [==============================] - 8s 141us/sample - loss: 0.0221 - acc: 0.9941
+60000/60000 [==============================] - 8s 135us/sample - loss: 0.0160 - accuracy: 0.9948
 Epoch 18/20
-60000/60000 [==============================] - 8s 135us/sample - loss: 0.0205 - acc: 0.9948
+60000/60000 [==============================] - 8s 130us/sample - loss: 0.0166 - accuracy: 0.9946
 Epoch 19/20
-60000/60000 [==============================] - 9s 149us/sample - loss: 0.0201 - acc: 0.9949
+60000/60000 [==============================] - 8s 130us/sample - loss: 0.0172 - accuracy: 0.9942
 Epoch 20/20
-60000/60000 [==============================] - 9s 144us/sample - loss: 0.0189 - acc: 0.9952
+60000/60000 [==============================] - 8s 129us/sample - loss: 0.0167 - accuracy: 0.9948
 </pre>
 </div>
 </div>
@@ -13426,7 +13404,7 @@ Epoch 20/20
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;tensorflow.python.keras.callbacks.History at 0x7f211bd3ff28&gt;</pre>
+<pre>&lt;tensorflow.python.keras.callbacks.History at 0x7fb10c1027b8&gt;</pre>
 </div>
 
 </div>
@@ -13466,7 +13444,231 @@ Epoch 20/20
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>0.9843</pre>
+<pre>0.9815</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">predict_classes</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;preds&#39;</span><span class="p">)</span>
+<span class="n">reals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">y_test</span><span class="p">],</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;reals&#39;</span><span class="p">)</span>
+<span class="n">reals</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reals</span><span class="p">))</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">reals</span><span class="p">,</span><span class="n">preds</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[13]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>preds</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+    </tr>
+    <tr>
+      <th>reals</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>971</td>
+      <td>2</td>
+      <td>0</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>1130</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>0</td>
+      <td>1012</td>
+      <td>5</td>
+      <td>3</td>
+      <td>0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>993</td>
+      <td>0</td>
+      <td>3</td>
+      <td>0</td>
+      <td>3</td>
+      <td>2</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>967</td>
+      <td>0</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>9</td>
+      <td>0</td>
+      <td>872</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2</td>
+      <td>3</td>
+      <td>0</td>
+      <td>1</td>
+      <td>9</td>
+      <td>4</td>
+      <td>935</td>
+      <td>0</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>3</td>
+      <td>10</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1008</td>
+      <td>2</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>4</td>
+      <td>1</td>
+      <td>3</td>
+      <td>5</td>
+      <td>7</td>
+      <td>5</td>
+      <td>0</td>
+      <td>2</td>
+      <td>940</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>4</td>
+      <td>13</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>987</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 
 </div>
